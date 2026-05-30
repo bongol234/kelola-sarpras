@@ -14,16 +14,344 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      asset_mutations: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          from_location_id: string | null
+          id: string
+          item_id: string
+          mutation_date: string
+          reason: string | null
+          to_location_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          from_location_id?: string | null
+          id?: string
+          item_id: string
+          mutation_date?: string
+          reason?: string | null
+          to_location_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          from_location_id?: string | null
+          id?: string
+          item_id?: string
+          mutation_date?: string
+          reason?: string | null
+          to_location_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "asset_mutations_from_location_id_fkey"
+            columns: ["from_location_id"]
+            isOneToOne: false
+            referencedRelation: "locations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "asset_mutations_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "asset_mutations_to_location_id_fkey"
+            columns: ["to_location_id"]
+            isOneToOne: false
+            referencedRelation: "locations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      items: {
+        Row: {
+          acquisition_date: string | null
+          asset_value: number | null
+          category_id: string | null
+          code: string
+          condition: Database["public"]["Enums"]["item_condition"]
+          created_at: string
+          funding_source: string | null
+          id: string
+          location_id: string | null
+          name: string
+          notes: string | null
+          photo_url: string | null
+          quantity: number
+          updated_at: string
+        }
+        Insert: {
+          acquisition_date?: string | null
+          asset_value?: number | null
+          category_id?: string | null
+          code: string
+          condition?: Database["public"]["Enums"]["item_condition"]
+          created_at?: string
+          funding_source?: string | null
+          id?: string
+          location_id?: string | null
+          name: string
+          notes?: string | null
+          photo_url?: string | null
+          quantity?: number
+          updated_at?: string
+        }
+        Update: {
+          acquisition_date?: string | null
+          asset_value?: number | null
+          category_id?: string | null
+          code?: string
+          condition?: Database["public"]["Enums"]["item_condition"]
+          created_at?: string
+          funding_source?: string | null
+          id?: string
+          location_id?: string | null
+          name?: string
+          notes?: string | null
+          photo_url?: string | null
+          quantity?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "items_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "items_location_id_fkey"
+            columns: ["location_id"]
+            isOneToOne: false
+            referencedRelation: "locations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      loans: {
+        Row: {
+          actual_return_date: string | null
+          approved_by: string | null
+          borrower_id: string
+          created_at: string
+          expected_return_date: string | null
+          id: string
+          item_id: string
+          loan_date: string
+          purpose: string | null
+          quantity: number
+          return_condition: Database["public"]["Enums"]["item_condition"] | null
+          return_notes: string | null
+          status: Database["public"]["Enums"]["loan_status"]
+        }
+        Insert: {
+          actual_return_date?: string | null
+          approved_by?: string | null
+          borrower_id: string
+          created_at?: string
+          expected_return_date?: string | null
+          id?: string
+          item_id: string
+          loan_date?: string
+          purpose?: string | null
+          quantity?: number
+          return_condition?:
+            | Database["public"]["Enums"]["item_condition"]
+            | null
+          return_notes?: string | null
+          status?: Database["public"]["Enums"]["loan_status"]
+        }
+        Update: {
+          actual_return_date?: string | null
+          approved_by?: string | null
+          borrower_id?: string
+          created_at?: string
+          expected_return_date?: string | null
+          id?: string
+          item_id?: string
+          loan_date?: string
+          purpose?: string | null
+          quantity?: number
+          return_condition?:
+            | Database["public"]["Enums"]["item_condition"]
+            | null
+          return_notes?: string | null
+          status?: Database["public"]["Enums"]["loan_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "loans_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      locations: {
+        Row: {
+          building: string | null
+          created_at: string
+          description: string | null
+          floor: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          building?: string | null
+          created_at?: string
+          description?: string | null
+          floor?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          building?: string | null
+          created_at?: string
+          description?: string | null
+          floor?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      maintenance_records: {
+        Row: {
+          completed_date: string | null
+          cost: number | null
+          created_at: string
+          created_by: string | null
+          description: string
+          id: string
+          item_id: string
+          performed_by: string | null
+          scheduled_date: string
+          status: Database["public"]["Enums"]["maintenance_status"]
+        }
+        Insert: {
+          completed_date?: string | null
+          cost?: number | null
+          created_at?: string
+          created_by?: string | null
+          description: string
+          id?: string
+          item_id: string
+          performed_by?: string | null
+          scheduled_date: string
+          status?: Database["public"]["Enums"]["maintenance_status"]
+        }
+        Update: {
+          completed_date?: string | null
+          cost?: number | null
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          id?: string
+          item_id?: string
+          performed_by?: string | null
+          scheduled_date?: string
+          status?: Database["public"]["Enums"]["maintenance_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "maintenance_records_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "petugas" | "guru" | "kepala_sekolah"
+      item_condition: "baik" | "rusak_ringan" | "rusak_berat"
+      loan_status:
+        | "diajukan"
+        | "disetujui"
+        | "ditolak"
+        | "dipinjam"
+        | "dikembalikan"
+      maintenance_status: "terjadwal" | "berlangsung" | "selesai"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +478,17 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "petugas", "guru", "kepala_sekolah"],
+      item_condition: ["baik", "rusak_ringan", "rusak_berat"],
+      loan_status: [
+        "diajukan",
+        "disetujui",
+        "ditolak",
+        "dipinjam",
+        "dikembalikan",
+      ],
+      maintenance_status: ["terjadwal", "berlangsung", "selesai"],
+    },
   },
 } as const
